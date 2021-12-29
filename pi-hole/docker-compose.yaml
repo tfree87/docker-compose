@@ -15,10 +15,17 @@ services:
       TZ: 'America/Chicago'
       WEBPASSWORD: 'changeme'
     volumes:
-      - etc_pihole:/etc/pihole/
-      - etc_dnsmasq_d:/etc/dnsmasq.d/
+      - "etc_pihole:/etc/pihole/"
+      - "etc_dnsmasq_d:/etc/dnsmasq.d/"
     # Recommended but not required (DHCP needs NET_ADMIN)
     #   https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
     cap_add:
       - NET_ADMIN
     restart: always
+
+volumes:
+  etc_pihole:
+    external: "false"
+  etc_dnsmasq_q:
+    external: "false"
+...

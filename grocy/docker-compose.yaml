@@ -9,11 +9,12 @@ services:
       - PGID=1000
       - TZ=America/Chicago
     volumes:
-      - config:/config
+      - "config:/config"
     ports:
-      - 8080:80
+      - "8080:80"
     restart: always
     
 volumes:
   config:
-    external: false
+    external: "false"
+...
