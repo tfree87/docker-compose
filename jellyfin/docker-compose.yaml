@@ -1,0 +1,21 @@
+---
+version: "3.8"
+
+services:
+  jellyfin:
+    container_name: jellyfin
+    image: jellyfin/jellyfin:latest
+    network_mode: host
+    ports:  
+      - 8096:8096
+    volumes:
+    - config:/config
+    - cache:/cache
+    - /mnt/external/media:/media
+    restart: always
+    
+volumes:
+  config:
+    external: false
+  cache:
+    external: false
