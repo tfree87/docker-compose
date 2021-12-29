@@ -15,9 +15,10 @@
 * Compose File for Portainer
 Portainer provides a web-based user interface to manage containers. 
 * Contents
-- [[file:./docker-compose.org][docker-compose.org]] An =org-mode= literate programming file containing explanations and commentary on the contents of the [[file:/docker-compose.yaml]] file
+- [[file:./docker-compose.org][docker-compose.org]] An =org-mode= literate programming file containing explanations and commentary on the contents of the [[file:./docker-compose.yaml]] file
 - [[file:./docker-compose.yaml][docker-compose.yaml]] The docker compose file
 * Deployment
+The following shell command below when run in this directory will deploy the Portainer container:
 #+begin_src shell
   docker-compose -up -d
 #+end_src
