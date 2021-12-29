@@ -1,0 +1,10 @@
+* Docker Compose
+This repository contains my docker-compose.yaml files that I run on my Raspberry Pi 4.
+* Contents
+- [[file:./barcode_buddy/][Barcode Buddy]] : A service that can pass barcodes to Grocy
+- [[file:./calibre-web][Calibre-Web]] : A web-based ebook server that utilized Calibre
+- [[file:./grocy/][Grocy]] : A service that acts as a database to catalog all your household Grocery items
+- [[file:./home_assistant/][Home Assistant]] : A home automation server to control smart home devices
+- [[file:/jellyfin/][Jellyfin]] : An open-source home media server based on Emby
+- [[file:./pi-hole][Pi-hole]] : A whole-network advertisement blocker
+- [[file:./portainer][Portainer]] : A web-ui that can be used to monitor and control docker containers
