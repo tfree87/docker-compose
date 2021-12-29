@@ -1,0 +1,63 @@
+# -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
+#+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline
+#+options: author:t broken-links:nil c:nil creator:nil
+#+options: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:t
+#+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+options: timestamp:t title:t toc:t todo:t |:t
+#+title: Portainer Docker Compose
+#+date: <2021-12-29 Wed>
+#+author: Thomas Freeman
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 27.1 (Org mode 9.4.6)
+
+* About
+This org file is a literate programming file to generate a Docker Compose ~.yaml~ file that will run the Portainer Community Edition to manage Docker containers.
+* Docker Compose Template
+Below is a template that will create the Docker Compose file:
+#+begin_src yaml :noweb yes :tangle yes
+  ---
+  version: "3.8"
+  
+  services:
+    <<service>>
+      <<ports>>
+      <<volumes>>
+  
+  <<create_volumes>>
+  ...
+#+end_src
+* Declare Portainer Service
+Create a service called ~portainer~ that pulls the Portainer Community Edition (~portainer/portainer-ce~) image and always restarts the service if Docker restarts.
+#+name: service
+#+begin_src yaml
+    portainer:
+      image: portainer/portainer-ce
+      container_name: portainer
+      restart: always
+#+end_src
+* Published Ports
+Portainer can be accessed from the 9000 port.
+#+name: ports
+#+begin_src yaml
+    ports:
+      - "9000:9000"
+#+end_src
+* Volumes
+Portainer needs access to ~/var/run/docker.sock~ and a named volume (~portainer_data~) will be created to store configuration between updates (see [[Create Named Volumes]]).
+#+name: volumes
+#+begin_src yaml
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "data:/data"
+#+end_src
+* Create Named Volumes
+Portainer configuration data in this compose file will be stored in a Docker named volume called ~portainer_data~ on the host system. Docker compose will automatically add the ~portainer_~ prefix to the named volume ~data~ in the example below to prevent name conflict.
+
+#+name: create_volumes
+#+begin_src yaml
+    volumes:
+        data:
+          external: false      
+#+end_src
