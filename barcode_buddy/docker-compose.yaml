@@ -1,0 +1,20 @@
+---
+version: "3.8"
+services:
+  barcodebuddy:
+    image: f0rc3/barcodebuddy-docker:arm32v7-latest
+    container_name: barcodebuddy
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Chicago
+    volumes:
+      - config:/config
+    ports:
+      - "8081:80" # Grocy on 8080, BB on 80801
+      - "4344:443" # Grocy on 4343, BB on 4344
+    restart: always
+    
+volumes:
+  config:
+    external: false
