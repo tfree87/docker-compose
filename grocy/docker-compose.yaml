@@ -16,5 +16,5 @@ services:
     
 volumes:
   config:
-    external: "false"
+    external: false
 ...

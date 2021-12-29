@@ -13,5 +13,5 @@ services:
 
 volumes:
   portainer_data:
-    external: "false"
+    external: false
 ...

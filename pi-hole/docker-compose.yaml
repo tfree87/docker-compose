@@ -25,7 +25,7 @@ services:
 
 volumes:
   etc_pihole:
-    external: "false"
+    external: false
   etc_dnsmasq_q:
-    external: "false"
+    external: false
 ...
