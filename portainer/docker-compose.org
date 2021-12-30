@@ -45,7 +45,7 @@ Portainer can be accessed from the 9000 port.
       - "9000:9000"
 #+end_src
 * Volumes
-Portainer needs access to ~/var/run/docker.sock~ and a named volume (~portainer_data~) will be created to store configuration between updates (see [[#named_volumes][Create Named Volumes]]).
+Portainer needs access to ~/var/run/docker.sock~ and a named volume (~portainer_data~) will be created to store configuration between updates (see [[#6-create-named_volumes][Create Named Volumes]]).
 #+name: volumes
 #+begin_src yaml
     volumes:
