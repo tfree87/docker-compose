@@ -1,0 +1,72 @@
+# -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
+#+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline
+#+options: author:t broken-links:nil c:nil creator:nil
+#+options: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:nil
+#+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+options: timestamp:t title:t toc:t todo:t |:t
+#+title: Barcode Buddy Docker Compose
+#+date: <2021-12-29 Wed>
+#+author: Thomas Freeman
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 27.1 (Org mode 9.4.6)
+
+* About
+This org file is a literate programming file to generate a Docker Compose ~.yaml~ file that will run the Barcode Buddy service to make adding barcodes to Grocy easier.
+* Docker Compose Template
+Below is a template that will create the Docker Compose file:
+#+begin_src yaml :noweb yes :tangle yes
+  ---
+  version: "3.8"
+  
+  services:
+    <<service>>
+      <<environment>>
+      <<ports>>
+      <<volumes>>
+  
+  <<create_volumes>>
+  ...
+#+end_src
+* Declare Barcode Buddy Service
+Create a service called ~barcodebuddy~ that pulls the Barcode Buddy image and always restarts the service if Docker restarts.
+#+name: service
+#+begin_src yaml
+  barcodebuddy:
+    image: f0rc3/barcodebuddy-docker:arm32v7-latest
+    container_name: barcodebuddy
+    restart: always
+#+end_src
+* Environment
+Set Barcode Buddy to use the default user and group for the server along with th e local time zone.
+#+name: environment
+#+begin_src yaml
+  environment:
+    - PUID=1000
+    - PGID=1000
+    - TZ=America/Chicago
+#+end_src
+* Published Ports
+Since I have Grocy set to use on 8080 instead of port 80 and 4343 instead of 443, then Barcode Buddy needs a different set of ports. Using 8081 and 4344 makes it easy to remember which ports Barcode Buddy is on if you can remember the ports that Grocy operates on as the ports are just shifted by one.
+#+name: ports
+#+begin_src yaml
+  ports:
+    - "8081:80" # Grocy on 8080, BB on 80801
+    - "4344:443" # Grocy on 4343, BB on 4344
+#+end_src
+* Volumes
+The volume ~barcodebuddy_config~ will be created to store configuration between updates.
+#+name: volumes
+#+begin_src yaml
+  volumes:
+    - "config:/config"
+#+end_src
+* Create Named Volumes
+Barcde Buddy configuration data in this compose file will be stored in a Docker named volume called ~barcodebuddy_config~ on the host system. Docker compose will automatically add the ~barcodebuddy_~ prefix to the named volume ~config~ in the example below to prevent name conflict.
+#+name: create_volumes
+#+begin_src yaml
+  volumes:
+    config:
+      external: false      
+#+end_src
