@@ -1,7 +1,7 @@
 # -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
 #+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline
 #+options: author:t broken-links:nil c:nil creator:nil
-#+options: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:t
+#+options: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:nil
 #+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
 #+options: timestamp:t title:t toc:t todo:t |:t
 #+title: Portainer Docker Compose
@@ -45,7 +45,7 @@ Portainer can be accessed from the 9000 port.
       - "9000:9000"
 #+end_src
 * Volumes
-Portainer needs access to ~/var/run/docker.sock~ and a named volume (~portainer_data~) will be created to store configuration between updates (see [[#6-create-named_volumes][Create Named Volumes]]).
+Portainer needs access to ~/var/run/docker.sock~ and a named volume (~portainer_data~) will be created to store configuration between updates (see [[Create Named Volumes]]).
 #+name: volumes
 #+begin_src yaml
     volumes:
@@ -53,9 +53,6 @@ Portainer needs access to ~/var/run/docker.sock~ and a named volume (~portainer_
       - "data:/data"
 #+end_src
 * Create Named Volumes
-:PROPERTIES:
-:CUSTOM_ID: 6-create-named-volumes
-:END:
 Portainer configuration data in this compose file will be stored in a Docker named volume called ~portainer_data~ on the host system. Docker compose will automatically add the ~portainer_~ prefix to the named volume ~data~ in the example below to prevent name conflict.
 
 #+name: create_volumes
