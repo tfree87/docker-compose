@@ -1,0 +1,72 @@
+# -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
+#+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline
+#+options: author:t broken-links:nil c:nil creator:nil
+#+options: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:nil
+#+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+options: timestamp:t title:t toc:t todo:t |:t
+#+title: Jellyfin Docker Compose
+#+date: <2021-12-29 Wed>
+#+author: Thomas Freeman
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 27.1 (Org mode 9.4.6)
+
+* About
+This org file is a literate programming file to generate a Docker Compose ~.yaml~ file that will run the Jellyfin media streaming server.
+* Docker Compose Template
+Below is a template that will create the Docker Compose file:
+#+begin_src yaml :noweb yes :tangle yes
+  ---
+  version: "3.8"
+  
+  services:
+    <<service>>
+      <<environment>>
+      <<ports>>
+      <<volumes>>
+  
+  <<create_volumes>>
+  ...
+#+end_src
+* Declare Jellyfin Service
+Create a service called ~jellyfin~ that pulls the official jellyfin Docker image.
+#+name: service
+#+begin_src yaml
+  jellyfin:
+    container_name: jellyfin
+    image: jellyfin/jellyfin:latest
+    network_mode: host
+    restart: always
+#+end_src
+* Environment
+No environment variables are needed for this image.
+#+name: environment
+#+begin_src yaml
+#+end_src
+* Published Ports
+Use the default port for Jellyfin of 8096.
+#+name: ports
+#+begin_src yaml
+  ports:
+    - "8096:8096"
+#+end_src
+* Volumes
+The volume ~jellyfin_config~ will be created to store configuration between updates. Jellyfin also can store its cached images and metadata into a Docker volume to make restarting the server faster. Lastly, Jellyfin needs to be able to know where the media files are located.
+#+name: volumes
+#+begin_src yaml
+  volumes:
+    - "config:/config"
+    - "cache:/cache"
+    - "/mnt/external/media:/media"
+#+end_src
+* Create Named Volumes
+Jellyfin configuration data and the cache in this compose file will be stored in a Docker named volume called ~jellyfin_config~ and ~jellyfin_cache~ on the host system, respectively. Docker compose will automatically add the ~jellyfin_~ prefix to the named volumes ~config~ and ~cache~ in the example below to prevent name conflict.
+#+name: create_volumes
+#+begin_src yaml
+  volumes:
+    config:
+      external: false
+    cache:
+      external: false
+#+end_src

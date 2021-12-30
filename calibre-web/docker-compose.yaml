@@ -1,22 +1,22 @@
 ---
 version: "3.8"
+
 services:
   calibre-web:
     image: linuxserver/calibre-web:arm32v7-latest
     container_name: calibre-web
+    restart: always
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=America/Chicago
-      - OAUTHLIB_RELAX_TOKEN_SCOPE=1 #optional
+    ports:
+      - "8083:8083"
     volumes:
       - "config:/config"
       - "/mnt/external/media/Library/Books:/books"
-    ports:
-      - "8083:8083"
-    restart: always
 
 volumes:
   config:
-    external: false
+    external: false      
 ...

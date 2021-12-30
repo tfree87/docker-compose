@@ -1,20 +1,21 @@
 ---
 version: "3.8"
+
 services:
   grocy:
     image: linuxserver/grocy:latest
     container_name: grocy
+    restart: always
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=America/Chicago
-    volumes:
-      - "config:/config"
     ports:
       - "8080:80"
-    restart: always
-    
+    volumes:
+      - "config:/config"
+
 volumes:
   config:
-    external: false
+    external: false      
 ...

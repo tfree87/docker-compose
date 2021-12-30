@@ -1,21 +1,22 @@
 ---
 version: "3.8"
+
 services:
   homeassistant:
     image: homeassistant/home-assistant
     container_name: homeassistant
     network_mode: host
     restart: always
-    ports:
-      - "8123:8123"
     environment:
       - PUID=1000
       - PGID=1000
+    ports:
+      - "8123:8123"
     volumes:
-      - "config:/config" # Contains all relevant configuration files.
+      - "config:/config"
       - "/etc/localtime:/etc/localtime:ro"
-      
+
 volumes:
   config:
-    external: false
+    external: false      
 ...

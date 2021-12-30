@@ -1,0 +1,24 @@
+#+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline
+#+options: author:t broken-links:nil c:nil creator:nil
+#+options: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:t
+#+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+options: timestamp:t title:t toc:t todo:t |:t
+#+title: README
+#+date: <2021-12-29 Wed>
+#+author: Thomas Freeman
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 27.1 (Org mode 9.4.6)
+
+
+* Compose File for Pi-hole
+Pi-hole is a whole-network advertisement-blocking DNS server.
+* Contents
+- [[file:./docker-compose.org][docker-compose.org]] An =org-mode= literate programming file containing explanations and commentary on the contents of the [[file:./docker-compose.yaml]] file
+- [[file:./docker-compose.yaml][docker-compose.yaml]] The docker compose file
+* Deployment
+The following shell command below when run in this directory will deploy the container:
+#+begin_src shell
+  docker-compose -up -d
+#+end_src

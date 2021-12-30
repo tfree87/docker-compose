@@ -1,0 +1,72 @@
+# -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
+#+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline
+#+options: author:t broken-links:nil c:nil creator:nil
+#+options: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:nil
+#+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+options: timestamp:t title:t toc:t todo:t |:t
+#+title: Home Assistant Docker Compose
+#+date: <2021-12-29 Wed>
+#+author: Thomas Freeman
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 27.1 (Org mode 9.4.6)
+
+* About
+This org file is a literate programming file to generate a Docker Compose ~.yaml~ file that will run the Home Assistant smart home automation server.
+* Docker Compose Template
+Below is a template that will create the Docker Compose file:
+#+begin_src yaml :noweb yes :tangle yes
+  ---
+  version: "3.8"
+  
+  services:
+    <<service>>
+      <<environment>>
+      <<ports>>
+      <<volumes>>
+  
+  <<create_volumes>>
+  ...
+#+end_src
+* Declare Home Assistant Service
+Create a service called ~homeassistant~ that pulls the official homeassistant Docker image.
+#+name: service
+#+begin_src yaml
+  homeassistant:
+    image: homeassistant/home-assistant
+    container_name: homeassistant
+    network_mode: host
+    restart: always
+#+end_src
+* Environment
+Set Home Assistant to use the default user and group for the server.
+#+name: environment
+#+begin_src yaml
+  environment:
+    - PUID=1000
+    - PGID=1000
+#+end_src
+* Published Ports
+Use the default port for Home Assistant of 8123.
+#+name: ports
+#+begin_src yaml
+  ports:
+    - "8123:8123"
+#+end_src
+* Volumes
+The volume ~homeassistant_config~ will be created to store configuration between updates. In addition, Home Assistant needs to be able to read the system's local time.
+#+name: volumes
+#+begin_src yaml
+  volumes:
+    - "config:/config"
+    - "/etc/localtime:/etc/localtime:ro"
+#+end_src
+* Create Named Volumes
+Home Assistant configuration data in this compose file will be stored in a Docker named volume called ~homeassistant_config~ on the host system. Docker compose will automatically add the ~homeassistant_~ prefix to the named volume ~config~ in the example below to prevent name conflict.
+#+name: create_volumes
+#+begin_src yaml
+  volumes:
+    config:
+      external: false      
+#+end_src

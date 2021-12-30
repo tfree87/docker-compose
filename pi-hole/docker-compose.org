@@ -1,0 +1,84 @@
+# -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
+#+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline
+#+options: author:t broken-links:nil c:nil creator:nil
+#+options: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:nil
+#+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+options: timestamp:t title:t toc:t todo:t |:t
+#+title: Pi-hole Docker Compose
+#+date: <2021-12-29 Wed>
+#+author: Thomas Freeman
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 27.1 (Org mode 9.4.6)
+
+* About
+This org file is a literate programming file to generate a Docker Compose ~.yaml~ file that will run the Pi-hole ad-blocking DNS server.
+* Docker Compose Template
+Below is a template that will create the Docker Compose file:
+#+begin_src yaml :noweb yes :tangle yes
+  ---
+  version: "3.8"
+  
+  services:
+    <<service>>
+      <<environment>>
+      <<ports>>
+      <<volumes>>
+      <<cap_add>>
+  
+  <<create_volumes>>
+  ...
+#+end_src
+* Declare Pi-hole Service
+Create a service called ~Pi-hole~ that pulls the official Pi-hole Docker image and always restarts when Docker restarts.
+#+name: service
+#+begin_src yaml
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    restart: always
+#+end_src
+* Environment
+Set the time zone and a default starting password for Pi-hole.
+#+name: environment
+#+begin_src yaml
+  environment:
+    TZ: 'America/Chicago'
+    WEBPASSWORD: 'changeme'
+#+end_src
+* Published Ports
+Use the default port setup for Pi-hole.
+#+name: ports
+#+begin_src yaml
+  ports:
+    - "53:53/tcp"
+    - "53:53/udp"
+    - "67:67/udp"
+    - "80:80/tcp"
+#+end_src
+* Add Capabilities
+Pi-hole needs access to the network stack in order to use DHCP. This is a recommended change but is not required to run Pi-hole.
+#+name: cap_add
+#+begin_src yaml
+  cap_add:
+    - NET_ADMIN
+#+end_src
+* Volumes
+The volume ~pihole_etc_pihole~ will be created to store configuration between updates. In addition, Pi-hole will store DNS configuration in ~pihole_etc_dnsmasq_d~.
+#+name: volumes
+#+begin_src yaml
+  volumes:
+    - "etc_pihole:/etc/pihole/"
+    - "etc_dnsmasq_d:/etc/dnsmasq.d/"
+#+end_src
+* Create Named Volumes
+Pi-hole configuration data in this compose file will be stored in a Docker named volume called ~pihole_etc_pihole~ and ~pihole_etc_dnsmasq_d~ on the host system. Docker compose will automatically add the ~pihole_~ prefix to the named volumes to prevent name conflict.
+#+name: create_volumes
+#+begin_src yaml
+  volumes:
+    etc_pihole:
+      external: false
+    etc_dnsmasq_q:
+      external: false
+#+end_src
