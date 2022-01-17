@@ -1,0 +1,22 @@
+---
+version: "3.8"
+
+services:
+  boinc:
+    image: lscr.io/linuxserver/boinc:arm32v7-latest
+    container_name: boinc
+    restart: always
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Chicago
+    ports:
+      - "8085:8080"
+    volumes:
+      - "config:/config"
+    
+
+volumes:
+  config:
+    external: false
+...
