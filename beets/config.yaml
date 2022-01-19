@@ -1,0 +1,59 @@
+---
+
+directory: /music
+library: /config/musiclibrary.blb
+plugins: fetchart fromfilename embedart convert scrub replaygain lastgenre chroma web the mbsync missing
+art_filename: albumart
+threaded: yes
+original_date: no
+per_disc_numbering: no
+
+import:
+  write: no
+  copy: no
+  move: no
+  resume: ask
+  incremental: yes
+  quiet_fallback: skip
+  timid: no
+  log: /config/beet.log
+
+paths:
+  default: %the{$albumartist}/$album%aunique{}/$track - $title
+  singleton: Singles/%the{$artist} - $title
+  comp: Compilations/$album%aunique{}/$track - $title
+  albumtype_soundtrack: Soundtracks/$album/$track $title
+
+# Plugin configuration
+
+convert:
+  auto: no
+  ffmpeg: /usr/bin/ffmpeg
+  opts: -ab 320k -ac 2 -ar 48000
+  max_bitrate: 320
+  threads: 1
+
+embedart:
+  auto: yes
+
+fetchart:
+  auto: yes
+
+lastgenre:
+  auto: yes
+  source: album
+
+replaygain:
+  auto: no
+
+scrub:
+    auto: yes
+
+the:
+  the: yes
+
+web:
+  host: 0.0.0.0
+  port: 8337
+
+...

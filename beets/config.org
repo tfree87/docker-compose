@@ -1,0 +1,137 @@
+# -*- eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t); -*-
+#+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline
+#+options: author:t broken-links:nil c:nil creator:nil
+#+options: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:nil
+#+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+options: timestamp:t title:t toc:t todo:t |:t
+#+title: Beets Config
+#+date: <2022-01-17 Mon>
+#+author: Thomas Freeman
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 27.1 (Org mode 9.4.6)
+#+cite_export:
+
+
+
+#+begin_src yaml :noweb no-export :tangle yes
+  ---
+  
+  directory: /music
+  library: /config/musiclibrary.blb
+  plugins: fetchart fromfilename embedart convert scrub replaygain lastgenre chroma web the mbsync missing
+  art_filename: albumart
+  threaded: yes
+  original_date: no
+  per_disc_numbering: no
+
+  <<import>>
+
+  <<paths>>
+
+  # Plugin configuration
+
+  <<convert>>
+
+  <<embedart>>
+
+  <<fetchart>>
+
+  <<lastgenre>>
+
+  <<replaygain>>
+
+  <<scrub>>
+
+  <<the>>
+
+  <<web>>
+
+  ...
+  #+end_src
+* Paths
+#+name: paths
+#+begin_src yaml 
+  paths:
+    default: %the{$albumartist}/$album%aunique{}/$track - $title
+    singleton: Singles/%the{$artist} - $title
+    comp: Compilations/$album%aunique{}/$track - $title
+    albumtype_soundtrack: Soundtracks/$album/$track $title
+#+end_src
+* Importing Music
+#+name: import
+#+begin_src yaml
+  import:
+    write: no
+    copy: no
+    move: no
+    resume: ask
+    incremental: yes
+    quiet_fallback: skip
+    timid: no
+    log: /config/beet.log
+#+end_src
+* Plugins
+** convert
+This plugins provides a command that allows exporting music files to a different format.
+#+name: convert
+#+begin_src yaml
+  convert:
+    auto: no
+    ffmpeg: /usr/bin/ffmpeg
+    opts: -ab 320k -ac 2 -ar 48000
+    max_bitrate: 320
+    threads: 1
+ #+end_src
+** embedart
+This plugin embeds albumart into the file metadata so that it will be displayed on some players.
+ #+name: embedart
+ #+begin_src yaml
+  embedart:
+    auto: yes
+#+end_src
+** fetchart
+Get album art from the internet based on the metadata of the album.
+#+name: fetchart
+#+begin_src yaml
+  fetchart:
+    auto: yes
+#+end_src
+** lastgenre
+Get genre information for the genre tags from last.fm.
+#+name: lastgenre
+#+begin_src yaml 
+  lastgenre:
+    auto: yes
+    source: album
+#+end_src
+** replaygain
+Controls the volume so that playback of songs is consistent from track to track.
+#+name: replaygain
+#+begin_src yaml
+  replaygain:
+    auto: no
+#+end_src
+** scrub
+Removes unused and unnecessary tags from music files 
+#+name: scrub
+#+begin_src yaml
+  scrub:
+      auto: yes
+#+end_src
+** the
+Changes how articles like "the" and "a" are used in directory paths.
+#+name: the
+#+begin_src yaml
+  the:
+    the: yes
+#+end_src
+** web
+Provides a web UI to access the beets library and play music.
+#+name: web
+#+begin_src yaml
+  web:
+    host: 0.0.0.0
+    port: 8337
+#+end_src
