@@ -20,5 +20,5 @@ Home Assistant is a self-hosted home server to control home automation and smart
 * Deployment
 The following shell command below when run in this directory will deploy the container:
 #+begin_src shell
-  docker-compose -up -d
+  docker-compose up -d
 #+end_src

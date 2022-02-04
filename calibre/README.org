@@ -20,5 +20,5 @@ Calibre is a ebook library manager.
 * Deployment
 The following shell command below when run in this directory will deploy the container:
 #+begin_src shell
-  docker-compose -up -d
+  docker-compose up -d
 #+end_src
