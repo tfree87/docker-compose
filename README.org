@@ -13,10 +13,10 @@
 #+options: timestamp:t title:t toc:t todo:t |:t
 
 
-A series of Docker-Compose files used to run various 
+A series of Docker-Compose files used to run various containers on the Raspberry Pi 4.
 
 * Contents
-This repository contains my docker-compose.yaml files that I run on my Raspberry Pi 4.
+In this repository, each directory contains a ~docker-compose.yaml~ file for a separate Docker container.
 ** Directories
 This repository contains the following directories
 - [[file:./barcode_buddy/][barcode buddy]] :: A service that can pass barcodes to Grocy
