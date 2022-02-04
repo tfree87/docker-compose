@@ -20,5 +20,5 @@ Portainer provides a web-based user interface to manage containers.
 * Deployment
 The following shell command below when run in this directory will deploy the Portainer container:
 #+begin_src shell
-  docker-compose -up -d
+  docker-compose up -d
 #+end_src

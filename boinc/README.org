@@ -20,5 +20,5 @@ BOINC is a program that will run scientific research projects on your computer d
 * Deployment
 The following shell command below when run in this directory will deploy the container:
 #+begin_src shell
-  docker-compose -up -d
+  docker-compose up -d
 #+end_src
