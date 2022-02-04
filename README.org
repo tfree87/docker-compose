@@ -13,7 +13,7 @@
 #+options: timestamp:t title:t toc:t todo:t |:t
 
 
-A series of Docker compose files used to run various 
+A series of Docker-Compose files used to run various 
 
 * Contents
 This repository contains my docker-compose.yaml files that I run on my Raspberry Pi 4.
