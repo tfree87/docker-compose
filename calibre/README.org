@@ -3,7 +3,7 @@
 #+options: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:nil
 #+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
 #+options: timestamp:t title:t toc:t todo:t |:t
-#+title: README
+#+title: Calibre
 #+date: <2021-12-29 Wed>
 #+author: Thomas Freeman
 #+language: en
@@ -12,8 +12,8 @@
 #+creator: Emacs 27.1 (Org mode 9.4.6)
 
 
-* Compose File for Calibre
-Calibre is a ebook library manager.
+* Docker-Compose File for Calibre
+[[https://calibre-ebook.com/][Calibre]] is a ebook library manager.
 * Contents
 - [[file:./docker-compose.org][docker-compose.org]] An =org-mode= literate programming file containing explanations and commentary on the contents of the [[file:./docker-compose.yaml]] file
 - [[file:./docker-compose.yaml][docker-compose.yaml]] The docker compose file

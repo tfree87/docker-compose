@@ -12,8 +12,8 @@
 #+creator: Emacs 27.1 (Org mode 9.4.6)
 
 
-* Compose File for Pi-hole
-Pi-hole is a whole-network advertisement-blocking DNS server.
+* Docker-Compose File for Pi-hole
+[[https://pi-hole.net/][Pi-hole]] is a whole-network advertisement-blocking DNS server.
 * Contents
 - [[file:./docker-compose.org][docker-compose.org]] An =org-mode= literate programming file containing explanations and commentary on the contents of the [[file:./docker-compose.yaml]] file
 - [[file:./docker-compose.yaml][docker-compose.yaml]] The docker compose file
