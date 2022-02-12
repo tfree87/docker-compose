@@ -6,7 +6,7 @@ for item in *; do
     if [ -d "$item" ]; then
         echo "$item"
 	cd $dir
-	docker compose up -d
+	docker-compose up -d
 	cd ..
     fi
 done
