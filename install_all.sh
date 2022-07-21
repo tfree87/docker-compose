@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# Run docker compose up -d in each of the directories below the current directory
+# Run 'docker-compose up -d' in each of the directories below the current directory
 
 for item in *; do
     if [ -d "$item" ]; then
